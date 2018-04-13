@@ -20,12 +20,21 @@ script_home=$(cd $(dirname $0);pwd)
 [ ! -d ${script_home}/tmp ] && mkdir ${script_home}/tmp
 rm -f ${script_home}/tmp/*tmp.*
 
-raw_data=$(cat $xml_file | tr "\n" " " | sed 's/><\//>-<\//g')
+## Preparing the input XML
+raw_data=$(cat $xml_file | tr "\n" " ")
+raw_data=$(echo $raw_data | sed 's/><\//>-<\//g')
+for i in $(echo $xml_schema | tr ";" "\n")
+do
+        for j in $(echo $i | tr "," "\n")
+        do
+                raw_data=$(echo $raw_data | sed 's/<'${j}'\/>/<'${j}'><\/'${j}'>/g')
+        done
+done
 
 ## Main
 for data_schm in $(echo $xml_schema | tr ";" "\n")
 do
-        tmp_file=${script_home}/tmp/$(echo $data_schm | tr ',' '_')_tmp.$$   
+        tmp_file=${script_home}/tmp/$(echo $data_schm | tr ',' '_')_tmp.$$
         if [ $(echo $data_schm | grep -q ","; echo $?) -eq 0 ] ; then
                 echo "$data_schm" | awk -F"," '{ print $NF }' | tr [a-z] [A-Z] > $tmp_file
         else
