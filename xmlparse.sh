@@ -36,7 +36,7 @@ printf "\n"
 maxnum=10
 for filenm in $(ls ${script_home}/tmp/*tmp.*)
 do
-        [ $(wc -L $filenm | awk '{ print $1 }') -gt $maxnum ] && maxnum=$(wc -L filenm | awk '{ print $1 }')
+        [ $(wc -L $filenm | awk '{ print $1 }') -gt $maxnum ] && maxnum=$(wc -L $filenm | awk '{ print $1 }')
 done
 maxnum=$(expr $maxnum + 5)
 paste ${script_home}/tmp/*tmp.* | expand -t $maxnum
