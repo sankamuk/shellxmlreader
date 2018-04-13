@@ -4,12 +4,12 @@ Bash tool to extracts value from a XML.
 ***Sample file***
 
 
-<img src="images/Sample.jpg" height="300">
+<img src="images/Sample.jpg">
 
 
 ***Sample Execution***
 
-<img src="images/Execution.jpg" height="300">
+<img src="images/Execution.jpg">
 
 
 ### Limitation and upgrade
