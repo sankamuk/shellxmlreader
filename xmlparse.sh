@@ -20,11 +20,12 @@ script_home=$(cd $(dirname $0);pwd)
 [ ! -d ${script_home}/tmp ] && mkdir ${script_home}/tmp
 rm -f ${script_home}/tmp/*tmp.*
 
+raw_data=$(cat $xml_file | tr "\n" " " | sed 's/><\//>-<\//g')
+
 ## Main
 for data_schm in $(echo $xml_schema | tr ";" "\n")
 do
-        tmp_file=${script_home}/tmp/$(echo $data_schm | tr ',' '_')_tmp.$$
-        raw_data=$(cat $xml_file | tr "\n" " " | sed 's/><\//>-<\//g')
+        tmp_file=${script_home}/tmp/$(echo $data_schm | tr ',' '_')_tmp.$$   
         if [ $(echo $data_schm | grep -q ","; echo $?) -eq 0 ] ; then
                 echo "$data_schm" | awk -F"," '{ print $NF }' | tr [a-z] [A-Z] > $tmp_file
         else
